@@ -99,22 +99,4 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     public Role getRoleById(Long id) {
         return roleRepository.getOne(id);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        UserServiceImpl that = (UserServiceImpl) o;
-        return Objects.equals(userRepository, that.userRepository) && Objects
-            .equals(roleRepository, that.roleRepository) && Objects.equals(passwordEncoder, that.passwordEncoder);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(userRepository, roleRepository, passwordEncoder);
-    }
 }

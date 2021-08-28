@@ -4,6 +4,7 @@ import com.crud.demorest.entitys.User;
 import com.crud.demorest.services.UserServiceImpl;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ public class MainController {
     @GetMapping("/user")
     public String showUserPage(Model model, Principal principal) {
         model.addAttribute("user", userServiceImpl.findByUsername(principal.getName()));
+//        model.addAttribute("user", User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         return "user";
     }
 
