@@ -47,7 +47,9 @@ public class MainController {
     public String showUserList(@ModelAttribute("user") User user, Model model, Principal principal) {
         model.addAttribute("allUsers", userServiceImpl.findAllUsers());
         model.addAttribute("allRoles", userServiceImpl.findAllRoles());
-        model.addAttribute("user", userServiceImpl.findByUsername(principal.getName()));
+        user = (User) SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
+        model.addAttribute("user", user);
+//        model.addAttribute("user", userServiceImpl.findByUsername(principal.getName()));
 
         return "admin";
     }
