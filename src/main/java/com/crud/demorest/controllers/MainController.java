@@ -32,8 +32,9 @@ public class MainController {
 
     @GetMapping("/user")
     public String showUserPage(Model model, Principal principal) {
-        model.addAttribute("user", userServiceImpl.findByUsername(principal.getName()));
-//        model.addAttribute("user", User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+//        model.addAttribute("user", userServiceImpl.findByUsername(principal.getName()));
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        model.addAttribute("user", user);
         return "user";
     }
 
