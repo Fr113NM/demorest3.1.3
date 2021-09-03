@@ -6,18 +6,13 @@ import com.crud.demorest.exceptionHandling.NoSuchUserException;
 import com.crud.demorest.repositories.RoleRepository;
 import com.crud.demorest.repositories.UserRepository;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
@@ -37,18 +32,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
-    }
-
-    @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException(String.format("User '%s' not found", username));
-        }
-
-//        return new org.springframework.security.core.userdetails.User(
-//            user.getUsername(), user.getPassword(), user.getRoles());
-        return user;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.crud.demorest.configs;
 
 import com.crud.demorest.configs.handler.LoginSuccessHandler;
-import com.crud.demorest.services.UserServiceImpl;
+import com.crud.demorest.services.UserDetailServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -16,8 +16,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private UserServiceImpl userServiceImpl;
     private LoginSuccessHandler loginSuccessHandler;
+    private UserDetailServiceImp userDetailServiceImp;
 
     @Autowired
     public void setLoginSuccessHandler(LoginSuccessHandler loginSuccessHandler) {
@@ -25,8 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void setUserService(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public void setUserService(UserDetailServiceImp userDetailServiceImp) {
+        this.userDetailServiceImp = userDetailServiceImp;
     }
 
     @Override
@@ -79,7 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder());
-        authenticationProvider.setUserDetailsService(userServiceImpl);
+        authenticationProvider.setUserDetailsService(userDetailServiceImp);
         return authenticationProvider;
     }
 }
