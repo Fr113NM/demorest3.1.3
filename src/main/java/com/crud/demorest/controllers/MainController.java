@@ -1,7 +1,7 @@
 package com.crud.demorest.controllers;
 
 import com.crud.demorest.entitys.User;
-import com.crud.demorest.services.UserServiceImpl;
+import com.crud.demorest.services.UserService;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Controller
 public class MainController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
 
     @Autowired
-    public MainController(UserServiceImpl userServiceImpl) {
-        this.userServiceImpl = userServiceImpl;
+    public MainController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/")
@@ -32,7 +32,7 @@ public class MainController {
 
     @GetMapping("/user")
     public String showUserPage(Model model, Principal principal) {
-//        model.addAttribute("user", userServiceImpl.findByUsername(principal.getName()));
+
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("user", user);
         return "user";
@@ -45,12 +45,10 @@ public class MainController {
 
     @GetMapping("/admin")
     public String showUserList(@ModelAttribute("user") User user, Model model, Principal principal) {
-        model.addAttribute("allUsers", userServiceImpl.findAllUsers());
-        model.addAttribute("allRoles", userServiceImpl.findAllRoles());
+        model.addAttribute("allUsers", userService.findAllUsers());
+        model.addAttribute("allRoles", userService.findAllRoles());
         user = (User) SecurityContextHolder.getContext ().getAuthentication ().getPrincipal ();
         model.addAttribute("user", user);
-//        model.addAttribute("user", userServiceImpl.findByUsername(principal.getName()));
-
         return "admin";
     }
 }
